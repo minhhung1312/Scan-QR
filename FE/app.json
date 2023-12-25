@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "QLIS",
+    "slug": "qlis",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/c35d8fe4-be58-4892-afb4-66b7da08a477"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hpcc.expo-redux-template"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.hpcc.expo_redux_template"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [],
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+    // "extra": {
+    //   "eas": {
+    //     "projectId": "c35d8fe4-be58-4892-afb4-66b7da08a477"
+    //   }
+    // }
+  }
+}
