@@ -1,11 +1,13 @@
-import { i18n, LocalizationKey } from "@/Localization";
+// import { i18n, LocalizationKey } from "@/Localization";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { HStack, Spinner, Heading, ScrollView } from "native-base";
+// import { StatusBar } from "expo-status-bar";
+// import { HStack, Spinner, Heading, ScrollView } from "native-base";
+import { ScrollView } from "native-base";
 import { User } from "@/Services";
 import { Image } from "react-native";
 import { Button } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export interface IHomeProps {
   data: User | undefined;
@@ -14,6 +16,11 @@ export interface IHomeProps {
 
 export const Home = (props: IHomeProps) => {
   const { data, isLoading } = props;
+  const navigation = useNavigation();
+
+  const goToScanScreen = () => {
+    navigation.navigate("Scan"); // Replace 'ScanScreen' with your screen name
+  };
 
   const recentDummy = [
     "Ho Chi Minh University of Technology",
@@ -50,7 +57,7 @@ export const Home = (props: IHomeProps) => {
             <View>
               <Text style={homeTitle.name}>Quick Location Info Scanning</Text>
               <Text style={homeTitle.slogan}>Unlock Locations, Uncover Stories!</Text>
-              <Button title="Scan now!" color="#15803d" />
+              <Button title="Scan now!" color="#15803d" onPress={() => goToScanScreen()}/>
             </View>
           </View>
         </View>
