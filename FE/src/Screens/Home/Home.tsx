@@ -1,5 +1,5 @@
 // import { i18n, LocalizationKey } from "@/Localization";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 // import { StatusBar } from "expo-status-bar";
 // import { HStack, Spinner, Heading, ScrollView } from "native-base";
@@ -8,6 +8,7 @@ import { User } from "@/Services";
 import { Image } from "react-native";
 import { Button } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export interface IHomeProps {
   data: User | undefined;
@@ -19,16 +20,44 @@ export const Home = (props: IHomeProps) => {
   const navigation = useNavigation();
 
   const goToScanScreen = () => {
-    navigation.navigate("Scan"); // Replace 'ScanScreen' with your screen name
+    navigation.navigate("Scan");
   };
+  // const fetchHistory = async () => {
+  //   try {
+  //     const response = await axios.get('http://192.168.1.11:3000/api/history?line_number=5');
+  
 
-  const recentDummy = [
-    "Ho Chi Minh University of Technology",
-    "Ho Chi Minh City International University",
-    "Ho Chi Minh City University of Science",
-    "Nguyen Khuyen High School for the gifted",
-    "University of Economics and Law",
-  ];
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('There was an error!', error);
+  //     // Handle errors
+  //   }
+  // };
+  const [recentLocation, setRecentLocation] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        axios.get('http://192.168.1.11:3000/api/history?line_number=5').then(res =>{
+          const list = res.data.map(item => item.location.name);
+          console.log(list);
+
+          setRecentLocation(list);
+        })
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+  // const recentDummy = [
+  //   "Ho Chi Minh University of Technology",
+  //   "Ho Chi Minh City International University",
+  //   "Ho Chi Minh City University of Science",
+  //   "Nguyen Khuyen High School for the gifted",
+  //   "University of Economics and Law",
+  // ];
   const outstandingDummy = [
     {
       name: "Ho Chi Minh University of Technology",
@@ -64,7 +93,7 @@ export const Home = (props: IHomeProps) => {
         <View style={{ marginBottom: 30 }}>
           <Text style={locationStyle.title}>Recently scanned locations</Text>
           <View style={locationStyle.container}>
-            {recentDummy.map((item, index) => (
+            {recentLocation.map((item, index) => (
               <View key={index} style={locationItemStyle.container}>
                 <Text style={locationItemStyle.text}>{item}</Text>
               </View>
