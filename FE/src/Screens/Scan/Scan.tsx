@@ -4,6 +4,8 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../RootStackParamList';
+import { domain } from "../../domain";
+
 
 export const Scan = () => {
     const [hasPermission, setHasPermission] = useState(null);
@@ -20,7 +22,7 @@ export const Scan = () => {
 
     const fetchLocationData = async (locationId: string) => {
         try {
-            const response = await fetch(`http://192.168.1.13:3000/api/locations/${locationId}`);
+            const response = await fetch(`${domain}/api/locations/${locationId}`);
             const responseBody = await response.json();
             if (!response.ok) {
                 throw new Error(responseBody.error || 'Location not found');
@@ -37,7 +39,7 @@ export const Scan = () => {
         try {
             const vnTimestamp = new Date(Date.now() + 7 * 60 * 60 * 1000);
 
-            const response = await fetch(`http://192.168.1.13:3000/api/add-history`, {
+            const response = await fetch(`${domain}/api/add-history`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,18 +63,20 @@ export const Scan = () => {
 
 
 
-    const handleBarCodeScanned = async ({ type, data }) => {
+    const handleBarCodeScanned = async ({ data }) => {
         if (scanned) return;
         setScanned(true);
         try {
             const locationData = await fetchLocationData(data.trim());
             await addHistory(locationData);
+            console.log('Location added:', locationData);
             navigation.navigate('Result', { location: locationData });
         } catch (error) {
             // Xử lý lỗi
-        } finally {
-            setScanned(false);
-        }
+        } 
+        // finally {
+        //     setScanned(false);
+        // }
     };
 
 

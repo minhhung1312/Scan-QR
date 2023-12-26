@@ -9,6 +9,7 @@ import { Image } from "react-native";
 import { Button } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { domain } from "../../domain";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -38,7 +39,7 @@ export const Home = (props: IHomeProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios.get('http://192.168.1.11:3000/api/history?line_number=5').then(res =>{
+        axios.get(`${domain}/api/history?line_number=5`).then(res =>{
           const list = res.data.map(item => item.location.name);
           console.log(list);
 
@@ -86,7 +87,7 @@ export const Home = (props: IHomeProps) => {
             <View>
               <Text style={homeTitle.name}>Quick Location Info Scanning</Text>
               <Text style={homeTitle.slogan}>Unlock Locations, Uncover Stories!</Text>
-              <Button title="Scan now!" color="#15803d" onPress={() => goToScanScreen()}/>
+              <Button title="Scan now!" color="#15803d" onPress={() => navigation.navigate("Scan")}/>
             </View>
           </View>
         </View>
