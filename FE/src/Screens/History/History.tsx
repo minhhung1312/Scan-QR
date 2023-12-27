@@ -123,6 +123,7 @@ export const History = (props: IHomeProps) => {
                 const hour2min = `${hour}:${minute}`;
                 
                 detail.push({
+                  "id": datalist[0]._id,
                   "time": hour2min,
                   "location":datalist[0].location.name
                 })
@@ -172,6 +173,9 @@ export const History = (props: IHomeProps) => {
           text: 'OK',
           onPress: () => {
             // Cập nhật state để xóa phần tử
+            axios.delete(`${domain}/api/history/${id}`).then((res) => {
+              console.log(res.data.message);
+            });
             setHistoryList(prevList => {
               const updatedList = prevList.map(item => {
                 if (item.date === date) {
