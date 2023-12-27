@@ -20,9 +20,6 @@ export const Home = (props: IHomeProps) => {
   const { data, isLoading } = props;
   const navigation = useNavigation();
 
-  const goToScanScreen = () => {
-    navigation.navigate("Scan");
-  };
   // const fetchHistory = async () => {
   //   try {
   //     const response = await axios.get('http://192.168.1.11:3000/api/history?line_number=5');
