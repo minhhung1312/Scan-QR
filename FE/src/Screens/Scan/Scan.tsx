@@ -6,6 +6,20 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../RootStackParamList';
 import { domain } from "../../domain";
 
+export const fetchLocationData = async (locationId: string) => {
+    try {
+        const response = await fetch(`${domain}/api/locations/${locationId}`);
+        const responseBody = await response.json();
+        if (!response.ok) {
+            throw new Error(responseBody.error || 'Location not found');
+        }
+        return responseBody;
+    } catch (error) {
+        console.error('Error fetching location:', error.message);
+        Alert.alert("Error", `Unable to fetch location data: ${error.message}`);
+        throw error;
+    }
+};
 
 export const Scan = () => {
     const [hasPermission, setHasPermission] = useState(null);
@@ -20,20 +34,7 @@ export const Scan = () => {
         })();
     }, []);
 
-    const fetchLocationData = async (locationId: string) => {
-        try {
-            const response = await fetch(`${domain}/api/locations/${locationId}`);
-            const responseBody = await response.json();
-            if (!response.ok) {
-                throw new Error(responseBody.error || 'Location not found');
-            }
-            return responseBody;
-        } catch (error) {
-            console.error('Error fetching location:', error.message);
-            Alert.alert("Error", `Unable to fetch location data: ${error.message}`);
-            throw error;
-        }
-    };
+    
 
     const addHistory = async (locationData) => {
         try {

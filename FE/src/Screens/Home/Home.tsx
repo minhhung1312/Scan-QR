@@ -1,15 +1,18 @@
 // import { i18n, LocalizationKey } from "@/Localization";
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // import { StatusBar } from "expo-status-bar";
 // import { HStack, Spinner, Heading, ScrollView } from "native-base";
 import { ScrollView } from "native-base";
 import { User } from "@/Services";
 import { Image } from "react-native";
 import { Button } from "react-native";
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { domain } from "../../domain";
+import {fetchLocationData} from "../Scan/Scan";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -18,27 +21,17 @@ export interface IHomeProps {
 
 export const Home = (props: IHomeProps) => {
   const { data, isLoading } = props;
-  const navigation = useNavigation();
+  type ScanScreenProps = StackNavigationProp<RootStackParamList, 'Scan'>;
+  const navigation = useNavigation<ScanScreenProps>();
 
-  // const fetchHistory = async () => {
-  //   try {
-  //     const response = await axios.get('http://192.168.1.11:3000/api/history?line_number=5');
-  
-
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('There was an error!', error);
-  //     // Handle errors
-  //   }
-  // };
   const [recentLocation, setRecentLocation] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         axios.get(`${domain}/api/history?line_number=5`).then(res =>{
-          const list = res.data.map(item => item.location.name);
-          console.log(list);
+          const list = res.data;
+          // console.log(list);
 
           setRecentLocation(list);
         })
@@ -71,6 +64,13 @@ export const Home = (props: IHomeProps) => {
     },
   ];
 
+  const recentResult = async (id)=>{
+    console.log(id);
+    const response = await fetchLocationData(id);
+    console.log(response);
+    navigation.navigate('Result', { location: response });
+  };
+
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
@@ -92,9 +92,9 @@ export const Home = (props: IHomeProps) => {
           <Text style={locationStyle.title}>Recently scanned locations</Text>
           <View style={locationStyle.container}>
             {recentLocation.map((item, index) => (
-              <View key={index} style={locationItemStyle.container}>
-                <Text style={locationItemStyle.text}>{item}</Text>
-              </View>
+              <TouchableOpacity key={index} style={locationItemStyle.container} onPress={() => recentResult(item.location._id)}>
+                <Text style={locationItemStyle.text}>{item.location.name}</Text>
+              </TouchableOpacity>
             ))}
           </View>
         </View>

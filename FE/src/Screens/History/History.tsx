@@ -269,6 +269,8 @@ const locationItemStyle = StyleSheet.create({
     alignItems: "center",
   },
   text: {
+    width: 240,
+    flexWrap: 'wrap',
     fontSize: 12,
     marginLeft: 12,
   },
