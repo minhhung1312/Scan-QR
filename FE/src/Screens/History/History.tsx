@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { User } from "@/Services";
 import { HStack, Spinner, Heading, ScrollView } from "native-base";
@@ -6,6 +6,8 @@ import { Button } from "react-native";
 import moment from 'moment';
 import Icon from "react-native-vector-icons/FontAwesome";
 import { TouchableOpacity, Alert } from 'react-native';
+import axios from 'axios';
+import { domain } from "../../domain";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -102,6 +104,60 @@ export const History = (props: IHomeProps) => {
     },
   ]);
 
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        axios.get(`${domain}/api/history`).then(res =>{
+          var datalist = res.data;
+          // console.log(datalist);
+          var history = [];
+          while (datalist.length > 0){
+            const date = new Date(datalist[0].timestamp.split("T")[0]);
+            console.log("Date: ", date);
+            var detail =[];
+            while (true){
+              var currentDate = new Date(datalist[0].timestamp.split("T")[0]);
+              if (currentDate.getDate() === date.getDate() && currentDate.getMonth() === date.getMonth() && currentDate.getFullYear() === date.getFullYear()) {
+                const [hour, minute] = datalist[0].timestamp.split("T")[1].split(':').slice(0, 2); // Splitting the string and taking the first two parts
+
+                const hour2min = `${hour}:${minute}`;
+                
+                detail.push({
+                  "id": datalist[0]._id,
+                  "time": hour2min,
+                  "location":datalist[0].location.name
+                })
+                datalist.splice(0,1);
+                if (datalist.length ===0){
+                  history.push({
+                    "date": `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`,
+                    "detail": detail,
+                  })
+                  console.log("History length: ", history.length);
+                  break;
+                }
+              }
+              else {
+                history.push({
+                  "date": `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`,
+                  "detail": detail,
+                })
+                console.log("History length: ", history.length);
+                break;
+              }
+            }
+            console.log("Data left: ", datalist.length);
+          }
+          console.log(history);
+          setHistoryList(history);
+        })
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchHistory();
+  }, []);
+
   const currentDate = moment().format('DD/MM/YYYY');
 
   const handleDeleteItem = (date: string, id: number) => {
@@ -117,6 +173,9 @@ export const History = (props: IHomeProps) => {
           text: 'OK',
           onPress: () => {
             // Cập nhật state để xóa phần tử
+            axios.delete(`${domain}/api/history/${id}`).then((res) => {
+              console.log(res.data.message);
+            });
             setHistoryList(prevList => {
               const updatedList = prevList.map(item => {
                 if (item.date === date) {
@@ -210,6 +269,8 @@ const locationItemStyle = StyleSheet.create({
     alignItems: "center",
   },
   text: {
+    width: 240,
+    flexWrap: 'wrap',
     fontSize: 12,
     marginLeft: 12,
   },

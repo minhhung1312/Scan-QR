@@ -1,11 +1,18 @@
-import { i18n, LocalizationKey } from "@/Localization";
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { HStack, Spinner, Heading, ScrollView } from "native-base";
+// import { i18n, LocalizationKey } from "@/Localization";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+// import { StatusBar } from "expo-status-bar";
+// import { HStack, Spinner, Heading, ScrollView } from "native-base";
+import { ScrollView } from "native-base";
 import { User } from "@/Services";
 import { Image } from "react-native";
 import { Button } from "react-native";
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../RootStackParamList';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { domain } from "../../domain";
+import {fetchLocationData} from "../Scan/Scan";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -14,14 +21,34 @@ export interface IHomeProps {
 
 export const Home = (props: IHomeProps) => {
   const { data, isLoading } = props;
+  type ScanScreenProps = StackNavigationProp<RootStackParamList, 'Scan'>;
+  const navigation = useNavigation<ScanScreenProps>();
 
-  const recentDummy = [
-    "Ho Chi Minh University of Technology",
-    "Ho Chi Minh City International University",
-    "Ho Chi Minh City University of Science",
-    "Nguyen Khuyen High School for the gifted",
-    "University of Economics and Law",
-  ];
+  const [recentLocation, setRecentLocation] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        axios.get(`${domain}/api/history?line_number=5`).then(res =>{
+          const list = res.data;
+          // console.log(list);
+
+          setRecentLocation(list);
+        })
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+  // const recentDummy = [
+  //   "Ho Chi Minh University of Technology",
+  //   "Ho Chi Minh City International University",
+  //   "Ho Chi Minh City University of Science",
+  //   "Nguyen Khuyen High School for the gifted",
+  //   "University of Economics and Law",
+  // ];
   const outstandingDummy = [
     {
       name: "Ho Chi Minh University of Technology",
@@ -37,6 +64,13 @@ export const Home = (props: IHomeProps) => {
     },
   ];
 
+  const recentResult = async (id)=>{
+    console.log(id);
+    const response = await fetchLocationData(id);
+    console.log(response);
+    navigation.navigate('Result', { location: response });
+  };
+
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
@@ -50,17 +84,17 @@ export const Home = (props: IHomeProps) => {
             <View>
               <Text style={homeTitle.name}>Quick Location Info Scanning</Text>
               <Text style={homeTitle.slogan}>Unlock Locations, Uncover Stories!</Text>
-              <Button title="Scan now!" color="#15803d" />
+              <Button title="Scan now!" color="#15803d" onPress={() => navigation.navigate("Scan")}/>
             </View>
           </View>
         </View>
         <View style={{ marginBottom: 30 }}>
           <Text style={locationStyle.title}>Recently scanned locations</Text>
           <View style={locationStyle.container}>
-            {recentDummy.map((item, index) => (
-              <View key={index} style={locationItemStyle.container}>
-                <Text style={locationItemStyle.text}>{item}</Text>
-              </View>
+            {recentLocation.map((item, index) => (
+              <TouchableOpacity key={index} style={locationItemStyle.container} onPress={() => recentResult(item.location._id)}>
+                <Text style={locationItemStyle.text}>{item.location.name}</Text>
+              </TouchableOpacity>
             ))}
           </View>
         </View>

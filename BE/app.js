@@ -76,9 +76,15 @@ app.get('/api/history', async (req, res) => {
     await client.connect();
     const database = client.db("QR");
     const collection = database.collection("history");
-
-    const history = await collection.find({}).toArray();
-
+    const line_num = req.query.line_number;
+    var history = null;
+    if (line_num === undefined){
+      history = await collection.find({}).sort({timestamp: -1}).toArray();
+    }
+    else{
+      history = await collection.find({}).limit(parseInt(line_num)).sort({timestamp: -1}).toArray();
+    }
+    
     res.json(history);
   } finally {
     await client.close();
