@@ -25,7 +25,7 @@ export const Result = (props: IHomeProps) => {
   const screenWidth = Dimensions.get('window').width;
 
   const imageMap = {
-    'h6.jpg': require('../../../assets/h6.jpg'),
+    'hcmut.jpg': require('../../../assets/hcmut.jpg'),
     'hcmus.jpg': require('../../../assets/hcmus.jpg'),
     'iu.png': require('../../../assets/iu.png'),
     'hq.webp': require('../../../assets/hq.webp'),
@@ -72,9 +72,6 @@ export const Result = (props: IHomeProps) => {
             </View>
             <View style={locationItemStyle.large_container}>
               <Text style={locationItemStyle.text}>Description: {locationData.description}</Text>
-            </View>
-            <View style={locationItemStyle.large_container}>
-              <Text style={locationItemStyle.text}>More details: {locationData.details}</Text>
             </View>
           </View>
         ) : (

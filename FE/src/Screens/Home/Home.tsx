@@ -43,14 +43,17 @@ export const Home = (props: IHomeProps) => {
 
   const outstandingDummy = [
     {
+      id: "658839b62b9b4c5beca1e4ee",
       name: "Ho Chi Minh University of Technology",
       image: require("../../../assets/hcmut-outstanding.png"),
     },
     {
+      id: "6588e92c189736bbac5eb368",
       name: "Ho Chi Minh City International University",
       image: require("../../../assets/iu-outstanding.png"),
     },
     {
+      id: "65883b562b9b4c5beca1e4ef",
       name: "Ho Chi Minh City University of Science",
       image: require("../../../assets/hcmus-outstanding.png"),
     },
@@ -94,10 +97,10 @@ export const Home = (props: IHomeProps) => {
           <Text style={locationStyle.title}>Outstanding locations</Text>
           <View style={styles.outstandingContainer}>
             {outstandingDummy.map((item, index) => (
-              <View key={index} style={{ width: 120 }}>
+              <TouchableOpacity key={index} style={{ width: 120 }} onPress={() => recentResult(item.id)}>
                 <Image source={item.image} />
                 <Text>{item.name}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
