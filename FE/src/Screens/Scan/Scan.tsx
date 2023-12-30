@@ -34,7 +34,10 @@ export const Scan = () => {
         })();
     }, []);
 
-    
+    useEffect(() => {
+        console.log('Scanned state updated:', scanned);
+    }, [scanned]);
+
 
     const addHistory = async (locationData) => {
         try {
@@ -55,7 +58,7 @@ export const Scan = () => {
             if (!response.ok) {
                 throw new Error(responseBody.error || 'Error adding to history');
             }
-            console.log('History added:', responseBody);
+            // console.log('History added:', responseBody);
         } catch (error) {
             console.error('Error adding history:', error.message);
             Alert.alert("Error", `Unable to add to history: ${error.message}`);
@@ -65,19 +68,18 @@ export const Scan = () => {
 
 
     const handleBarCodeScanned = async ({ data }) => {
+        console.log("aaaaaaaaa");
         if (scanned) return;
+        console.log("bbbbbbbbbbbbbbb");
         setScanned(true);
         try {
             const locationData = await fetchLocationData(data.trim());
             await addHistory(locationData);
-            console.log('Location added:', locationData);
+            // console.log('Location added:', locationData);
             navigation.navigate('Result', { location: locationData });
         } catch (error) {
             // Xử lý lỗi
-        } 
-        // finally {
-        //     setScanned(false);
-        // }
+        }
     };
 
 
@@ -90,14 +92,23 @@ export const Scan = () => {
         return <Text style={styles.text}>No access to camera</Text>;
     }
 
+    const initiateScan = () => {
+        setScanned(false);
+    };
+
     return (
         <View style={styles.container}>
             <BarCodeScanner
+                key={scanned ? 'scanner-on' : 'scanner-off'}
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
             />
 
-            {/* {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
+            {/* {scanned && (
+                <View style={styles.buttonContainer}>
+                    <Button title={'Tap to Scan Again'} onPress={initiateScan} />
+                </View>
+            )} */}
         </View>
     );
 };
@@ -112,6 +123,10 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         fontSize: 20,
+    },
+    buttonContainer: {
+        alignSelf: 'center',
+        margin: 20,
     },
 });
 

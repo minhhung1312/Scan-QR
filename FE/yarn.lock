@@ -3067,10 +3067,10 @@ at-least-node@^1.0.0:
   resolved "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-axios@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.npmjs.org/axios/-/axios-1.6.2.tgz"
-  integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
+axios@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.6.3.tgz"
+  integrity sha512-fWyNdeawGam70jXSVlKl+SUNVcL6j6W79CuSIPfi6HnDUmSCH6gyUys/HrqHeA/wU0Az41rRgean494d0Jb+ww==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -3765,6 +3765,11 @@ csstype@^3.0.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.1.tgz"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
+ctx-polyfill@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/ctx-polyfill/-/ctx-polyfill-1.1.4.tgz"
+  integrity sha512-tz65F3/zmZ2+CMtn4MhNhYi/yIN9dKnItMKzSkH2GE6dBpAIbUR0K5pSHWqUL3OuNBCA70DKlWZYUClHfydIXg==
+
 dag-map@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/dag-map/-/dag-map-1.0.2.tgz"
@@ -4034,6 +4039,11 @@ escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
+
+escape-string-regexp@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 esprima@^4.0.0, esprima@~4.0.0:
   version "4.0.1"
@@ -4790,7 +4800,7 @@ intl-messageformat@^10.1.0:
     "@formatjs/icu-messageformat-parser" "2.1.7"
     tslib "2.4.0"
 
-invariant@*, invariant@^2.2.2, invariant@^2.2.4:
+invariant@*, invariant@^2.2.2, invariant@^2.2.4, invariant@2.2.4:
   version "2.2.4"
   resolved "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -5200,6 +5210,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jsqr@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/jsqr/-/jsqr-1.4.0.tgz"
+  integrity sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==
 
 kind-of@^6.0.2:
   version "6.0.3"
@@ -6543,6 +6558,13 @@ react-native-camera@^4.2.1:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-canvas@^0.1.39:
+  version "0.1.39"
+  resolved "https://registry.npmjs.org/react-native-canvas/-/react-native-canvas-0.1.39.tgz"
+  integrity sha512-UYAMoNvmGgBU+gk2WVg+GVDotMH+tujlsw9TR8FFLlcCqAzhdEnh5tQRA0G12DkusjwfJNiEiDagRX/MhKLLMA==
+  dependencies:
+    ctx-polyfill "^1.1.4"
+
 react-native-codegen@^0.71.6:
   version "0.71.6"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.6.tgz"
@@ -6635,6 +6657,14 @@ react-native-web@~0.18.11:
     normalize-css-color "^1.0.2"
     postcss-value-parser "^4.2.0"
     styleq "^0.1.2"
+
+"react-native-webview@>=5.10.0 || >=6.1.0":
+  version "13.6.3"
+  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-13.6.3.tgz"
+  integrity sha512-IApO0JSj0uAWsBGKWagyfgDYoX29piiMYLmkHtRjKeL1rIVjLoR/bMe7KJ/0X47y86b//a6u3cYQtphyay+F2A==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", react-native@^0.71.14, "react-native@>= 0.67", react-native@>=0.42.0, react-native@>=0.46, react-native@>=0.48.4, react-native@>=0.59:
   version "0.71.14"

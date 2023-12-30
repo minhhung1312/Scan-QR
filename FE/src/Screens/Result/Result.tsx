@@ -28,20 +28,30 @@ export const Result = (props: IHomeProps) => {
     'h6.jpg': require('../../../assets/h6.jpg'),
     'hcmus.jpg': require('../../../assets/hcmus.jpg'),
     'iu.png': require('../../../assets/iu.png'),
+    'hq.webp': require('../../../assets/hq.webp'),
+    'uel.webp': require('../../../assets/uel.webp'),
+    'hcmuaf.jpg': require('../../../assets/hcmuaf.jpg'),
+    'uit.jpg': require('../../../assets/uit.jpg'),
+    'ush.jpg': require('../../../assets/ush.jpg'),
+    'ussh.jpg': require('../../../assets/ussh.jpg'),
   };
-  const imageName = locationData.image.split('/').pop().replace('")', '');
-  const imageSource = imageMap[imageName];
+  let imageName, imageSource;
+  if (locationData && locationData.image) {
+    imageName = locationData.image.split('/').pop().replace('")', '');
+    imageSource = imageMap[imageName];
+  }
 
   return (
     <View style={styles.container}>
-      {/* <StatusBar style="auto" /> */}
       <ScrollView style={styles.scrollContainer}>
-        <View style={styles.topContainer}>
+        {locationData ? (<View style={styles.topContainer}>
           <Image
             source={imageSource}
             style={{ width: screenWidth, height: screenWidth * 0.5 }}
           />
-        </View>
+        </View>) : (
+          <View></View>
+        )}
 
         {locationData ? (
           <View style={locationStyle.container}>
@@ -108,11 +118,13 @@ const locationItemStyle = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: 10,
     width: "100%",
-    height: 34,
+    // height: 36,
     borderColor: "#15803D",
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    paddingTop: 8,
+    paddingBottom: 8,
   },
   large_container: {
     borderWidth: 1,
@@ -146,28 +158,3 @@ const locationStyle = StyleSheet.create({
   },
 });
 
-const homeTitle = StyleSheet.create({
-  text: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-  name: {
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  slogan: {
-    marginBottom: 20,
-  },
-});
-const buttonStyle = StyleSheet.create({
-  scanButton: {
-    borderRadius: 30,
-    width: 120,
-    height: 50,
-    backgroundColor: "#15803D",
-  },
-  scanText: {
-    fontWeight: "bold",
-    color: "white",
-  },
-});

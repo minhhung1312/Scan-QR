@@ -12,7 +12,7 @@ import { RootStackParamList } from '../RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { domain } from "../../domain";
-import {fetchLocationData} from "../Scan/Scan";
+import { fetchLocationData } from "../Scan/Scan";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -29,9 +29,8 @@ export const Home = (props: IHomeProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios.get(`${domain}/api/history?line_number=5`).then(res =>{
+        axios.get(`${domain}/api/history?line_number=5`).then(res => {
           const list = res.data;
-          // console.log(list);
 
           setRecentLocation(list);
         })
@@ -41,14 +40,7 @@ export const Home = (props: IHomeProps) => {
     };
     fetchData();
   }, []);
-  
-  // const recentDummy = [
-  //   "Ho Chi Minh University of Technology",
-  //   "Ho Chi Minh City International University",
-  //   "Ho Chi Minh City University of Science",
-  //   "Nguyen Khuyen High School for the gifted",
-  //   "University of Economics and Law",
-  // ];
+
   const outstandingDummy = [
     {
       name: "Ho Chi Minh University of Technology",
@@ -64,7 +56,7 @@ export const Home = (props: IHomeProps) => {
     },
   ];
 
-  const recentResult = async (id)=>{
+  const recentResult = async (id) => {
     console.log(id);
     const response = await fetchLocationData(id);
     console.log(response);
@@ -84,7 +76,7 @@ export const Home = (props: IHomeProps) => {
             <View>
               <Text style={homeTitle.name}>Quick Location Info Scanning</Text>
               <Text style={homeTitle.slogan}>Unlock Locations, Uncover Stories!</Text>
-              <Button title="Scan now!" color="#15803d" onPress={() => navigation.navigate("Scan")}/>
+              <Button title="Scan now!" color="#15803d" onPress={() => navigation.navigate("Scan")} />
             </View>
           </View>
         </View>
@@ -145,13 +137,14 @@ const locationItemStyle = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: 10,
     width: "100%",
-    height: 34,
+    // height: 34,
+    paddingTop: 8,
+    paddingBottom: 8,
     borderColor: "#15803D",
   },
   text: {
     fontSize: 12,
     paddingLeft: 16,
-    paddingTop: 8,
   },
 });
 const locationStyle = StyleSheet.create({

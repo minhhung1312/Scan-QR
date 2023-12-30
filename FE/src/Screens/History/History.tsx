@@ -107,30 +107,30 @@ export const History = (props: IHomeProps) => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        axios.get(`${domain}/api/history`).then(res =>{
+        axios.get(`${domain}/api/history`).then(res => {
           var datalist = res.data;
           // console.log(datalist);
           var history = [];
-          while (datalist.length > 0){
+          while (datalist.length > 0) {
             const date = new Date(datalist[0].timestamp.split("T")[0]);
             console.log("Date: ", date);
-            var detail =[];
-            while (true){
+            var detail = [];
+            while (true) {
               var currentDate = new Date(datalist[0].timestamp.split("T")[0]);
               if (currentDate.getDate() === date.getDate() && currentDate.getMonth() === date.getMonth() && currentDate.getFullYear() === date.getFullYear()) {
                 const [hour, minute] = datalist[0].timestamp.split("T")[1].split(':').slice(0, 2); // Splitting the string and taking the first two parts
 
                 const hour2min = `${hour}:${minute}`;
-                
+
                 detail.push({
                   "id": datalist[0]._id,
                   "time": hour2min,
-                  "location":datalist[0].location.name
+                  "location": datalist[0].location.name
                 })
-                datalist.splice(0,1);
-                if (datalist.length ===0){
+                datalist.splice(0, 1);
+                if (datalist.length === 0) {
                   history.push({
-                    "date": `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`,
+                    "date": `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
                     "detail": detail,
                   })
                   console.log("History length: ", history.length);
@@ -139,7 +139,7 @@ export const History = (props: IHomeProps) => {
               }
               else {
                 history.push({
-                  "date": `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`,
+                  "date": `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
                   "detail": detail,
                 })
                 console.log("History length: ", history.length);
@@ -262,7 +262,7 @@ const locationItemStyle = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: 10,
     width: "100%",
-    height: 34,
+    height: 40,
     borderColor: "#15803D",
     flex: 1,
     flexDirection: "row",
@@ -297,34 +297,8 @@ const locationStyle = StyleSheet.create({
   },
 });
 
-const homeTitle = StyleSheet.create({
-  text: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-  name: {
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  slogan: {
-    marginBottom: 20,
-  },
-});
-const buttonStyle = StyleSheet.create({
-  scanButton: {
-    borderRadius: 30,
-    width: 120,
-    height: 50,
-    backgroundColor: "#15803D",
-  },
-  scanText: {
-    fontWeight: "bold",
-    color: "white",
-  },
-});
-
 const dateStyle = StyleSheet.create({
   container: {
-    marginBottom: 30,
+    marginBottom: 15,
   },
 });
