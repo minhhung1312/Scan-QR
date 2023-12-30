@@ -5,5 +5,4 @@ export type RootStackParamList = {
     Home: undefined;
     Scan: undefined;
     Result: { location: Location };
-    // Thêm các màn hình khác nếu cần
 };
