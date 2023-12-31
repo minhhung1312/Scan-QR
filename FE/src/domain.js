@@ -1,1 +1,1 @@
-export const domain = "http://192.168.1.13:3000";
+export const domain = "https://clis-api.onrender.com";
